@@ -21,8 +21,8 @@ All data is stored **in-memory** and resets when the application restarts.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/mattriots/receipt-processor.git
-   cd receipt-processor
+   git clone https://github.com/mattriots/Receipt_Processor.git
+   cd Receipt_Processor.git
 2. **Install Dependecies**:
    ```bash
     npm install
@@ -30,7 +30,7 @@ All data is stored **in-memory** and resets when the application restarts.
    ```bash
     npm start
    ```
-    The service should now be running on http://localhost:3000.
+    The app is available at http://localhost:3000.
 
 ## Running with Docker
 
@@ -43,4 +43,10 @@ All data is stored **in-memory** and resets when the application restarts.
     docker run -p 3000:3000 receipt-processor
     ```
     The app is available at http://localhost:3000.
+
+## Testing
+
+I used Jest and Supertest for testing. To run tests:
+   ```bash
+   npm test
    
