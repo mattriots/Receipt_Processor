@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "node app.js"
   },
   "repository": {
@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "4.21.2",
-    "uuid": "2.0.3"
+    "supertest": "^7.0.0",
+    "uuid": "^11.0.5"
   },
   "bugs": {
     "url": "https://github.com/mattriots/Receipt_Processor/issues"

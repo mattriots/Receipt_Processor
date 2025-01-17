@@ -2,13 +2,22 @@ const {
   storeReceipt,
   getReceiptById,
   calculatePoints,
-} = require('./receipts-service');
-const { Receipt, Item } = require('./receipts-model');
+} = require('../service/receipts-service');
+const { Receipt, Item } = require('../model/receipts-model');
 
 // POST /receipts/process;
 function processReceipt(req, res) {
   try {
     const { retailer, purchaseDate, purchaseTime, items, total } = req.body;
+
+    if (!retailer || !purchaseDate || !purchaseTime || !items || !total) {
+      return res.status(400).json({ error: 'The receipt is invalid.' });
+    }
+
+    if (items.length < 1) {
+      return res.status(400).json({ error: 'The receipt is invalid.' });
+    }
+
     const itemObjects = items.map((item) => new Item(item));
     const newReceipt = new Receipt({
       retailer,
@@ -18,24 +27,21 @@ function processReceipt(req, res) {
       total,
     });
     const id = storeReceipt(newReceipt);
-    console.log('ID: ' + id);
-    res.json({ id });
+
+    return res.json({ id });
   } catch (error) {
-    res.status(400).json({ error: 'The receipt is invalid.' });
+    return res.status(400).json({ error: 'The receipt is invalid.' });
   }
 }
 
 // GET /receipts/:id/points
-
 function getReceiptPoints(req, res) {
   const { id } = req.params;
-
   const receipt = getReceiptById(id);
 
   if (!receipt) {
-    res.status(404).send('No receipt found for that ID.');
+    return res.status(404).json({ error: 'No receipt found for that ID.' });
   }
-
   const points = calculatePoints(receipt);
   return res.json({ points });
 }

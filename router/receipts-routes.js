@@ -1,5 +1,8 @@
 const express = require('express');
-const { processReceipt, getReceiptPoints } = require('./receipts-controller');
+const {
+  processReceipt,
+  getReceiptPoints,
+} = require('../controller/receipts-controller');
 
 const router = express.Router();
 
