@@ -1,0 +1,28 @@
+{
+  "name": "receipt_processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --forceExit",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattriots/Receipt_Processor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.21.2",
+    "supertest": "^7.0.0",
+    "uuid": "^11.0.5"
+  },
+  "bugs": {
+    "url": "https://github.com/mattriots/Receipt_Processor/issues"
+  },
+  "homepage": "https://github.com/mattriots/Receipt_Processor#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
