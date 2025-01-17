@@ -1,6 +1,6 @@
 # Receipt Processor
 
-A simple Node.js service that processes receipts and calculates points based on various criteria.
+Here is a simple Node.js service that processes receipts and calculates points based on certain criteria.
 
 ## Overview
 
