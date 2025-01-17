@@ -1,8 +1,8 @@
 class Receipt {
-  constructor({ retailers, purchaseDate, purchaseItem, items, total }) {
-    this.retailers = retailers;
+  constructor({ retailer, purchaseDate, purchaseTime, items, total }) {
+    this.retailer = retailer;
     this.purchaseDate = purchaseDate;
-    this.purchaseItem = purchaseItem;
+    this.purchaseTime = purchaseTime;
     this.items = items;
     this.total = total;
   }

@@ -2,9 +2,10 @@
   "name": "receipt_processor",
   "version": "1.0.0",
   "description": "",
-  "main": "receipts-controller.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -13,10 +14,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "uuid4": "2.0.3"
+    "express": "4.21.2",
+    "uuid": "2.0.3"
   },
   "bugs": {
     "url": "https://github.com/mattriots/Receipt_Processor/issues"
   },
-  "homepage": "https://github.com/mattriots/Receipt_Processor#readme"
+  "homepage": "https://github.com/mattriots/Receipt_Processor#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
