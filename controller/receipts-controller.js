@@ -7,6 +7,7 @@ const { Receipt, Item } = require('../model/receipts-model');
 
 // POST /receipts/process;
 function processReceipt(req, res) {
+
   try {
     const { retailer, purchaseDate, purchaseTime, items, total } = req.body;
 
@@ -19,6 +20,7 @@ function processReceipt(req, res) {
     }
 
     const itemObjects = items.map((item) => new Item(item));
+
     const newReceipt = new Receipt({
       retailer,
       purchaseDate,
@@ -26,6 +28,7 @@ function processReceipt(req, res) {
       items: itemObjects,
       total,
     });
+
     const id = storeReceipt(newReceipt);
 
     return res.json({ id });
@@ -36,6 +39,7 @@ function processReceipt(req, res) {
 
 // GET /receipts/:id/points
 function getReceiptPoints(req, res) {
+  
   const { id } = req.params;
   const receipt = getReceiptById(id);
 

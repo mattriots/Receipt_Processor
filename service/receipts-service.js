@@ -4,16 +4,18 @@ const { v4: uuidv4 } = require('uuid');
 // ID -> Receipt
 const receiptsMap = new Map();
 
+//Map random UUID to Receipt Object
 function storeReceipt(receipt) {
   const id = uuidv4();
   receiptsMap.set(id, receipt);
   return id;
 }
-
+//Getter for Receipt by ID
 function getReceiptById(id) {
   return receiptsMap.get(id);
 }
 
+//Function to calculate all points
 function calculatePoints(receipt) {
   let points = 0;
 
@@ -39,7 +41,6 @@ function calculatePoints(receipt) {
   }
 
   //4. 5 points for every two items on the receipt.
-
   const itemCount = items ? items.length : 0;
   points += 5 * Math.floor(itemCount / 2);
 
@@ -68,6 +69,7 @@ function calculatePoints(receipt) {
   return points;
 }
 
+//Function to handle time between 2pm and 4pm
 function between2pmAnd4pm(purchaseTime) {
   const [hour, minute] = purchaseTime.split(':').map((n) => parseInt(n, 10));
 
