@@ -12,6 +12,9 @@ function storeReceipt(receipt) {
 }
 //Getter for Receipt by ID
 function getReceiptById(id) {
+  if (!receiptsMap.has(id)) {
+    throw new Error(`No Receipt found with ID: ${id}`);
+  }
   return receiptsMap.get(id);
 }
 
