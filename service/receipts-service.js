@@ -10,12 +10,22 @@ function storeReceipt(receipt) {
   receiptsMap.set(id, receipt);
   return id;
 }
+
 //Getter for Receipt by ID
 function getReceiptById(id) {
   if (!receiptsMap.has(id)) {
     throw new Error(`No Receipt found with ID: ${id}`);
   }
   return receiptsMap.get(id);
+}
+
+function updateReceiptById(id, body) {
+  let oldReceipt = getReceiptById(id);
+  const updatedReceipt = { ...oldReceipt, ...body };
+
+  //put it back in the map and return the update receipt
+  receiptsMap.set(id, updatedReceipt);
+  return updatedReceipt;
 }
 
 //Function to calculate all points
@@ -85,4 +95,5 @@ module.exports = {
   storeReceipt,
   getReceiptById,
   calculatePoints,
+  updateReceiptById,
 };

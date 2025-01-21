@@ -2,6 +2,7 @@ const {
   storeReceipt,
   getReceiptById,
   calculatePoints,
+  updateReceiptById,
 } = require('../service/receipts-service');
 const { Receipt, Item } = require('../model/receipts-model');
 
@@ -36,6 +37,20 @@ function processReceipt(req, res) {
   }
 }
 
+// PUT /receipt/:id/update
+function updateReceipt(req, res) {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+   
+    const updatedReceipt = updateReceiptById(id, body);
+    const updatedPoints = calculatePoints(updatedReceipt);
+    return res.json({ id, updatedReceipt, updatedPoints });
+  } catch (error) {
+    return res.status(404).json({ error: 'Receipt was not updated.' });
+  }
+}
+
 // GET /receipts/:id/points
 function getReceiptPoints(req, res) {
   try {
@@ -51,4 +66,5 @@ function getReceiptPoints(req, res) {
 module.exports = {
   processReceipt,
   getReceiptPoints,
+  updateReceipt,
 };
