@@ -1,10 +1,12 @@
 const {
   storeReceipt,
   getReceiptById,
+  getItemById,
   calculatePoints,
   updateReceiptById,
 } = require('../service/receipts-service');
 const { Receipt, Item } = require('../model/receipts-model');
+const { v4: uuidv4 } = require('uuid');
 
 // POST /receipts/process;
 function processReceipt(req, res) {
@@ -19,35 +21,57 @@ function processReceipt(req, res) {
       return res.status(400).json({ error: 'The receipt is invalid.' });
     }
 
-    const itemObjects = items.map((item) => new Item(item));
+    //Create itemMap to map itemId -> Item object
+    const itemMap = new Map();
 
+    for (const item of items) {
+      const itemId = uuidv4();
+      const itemWithId = { ...item, id: itemId };
+      itemMap.set(itemId, new Item(itemWithId));
+    }
+
+    //Make the new Receipt and store the Map
     const newReceipt = new Receipt({
       retailer,
       purchaseDate,
       purchaseTime,
-      items: itemObjects,
+      items: itemMap,
       total,
     });
 
-    const id = storeReceipt(newReceipt);
+    const receiptId = storeReceipt(newReceipt);
 
-    return res.json({ id });
+    //Convert the keys of the Map to array so we can display it nicely
+    const itemsArr = Array.from(itemMap.values());
+
+    return res.json({
+      receiptId: receiptId,
+      retailer: newReceipt.retailer,
+      purchaseDate: newReceipt.purchaseDate,
+      purchaseTime: newReceipt.purchaseTime,
+      items: itemsArr,
+      total: newReceipt.total,
+    });
   } catch (error) {
     return res.status(400).json({ error: 'The receipt is invalid.' });
   }
 }
 
 // PUT /receipt/:id/update
+// Need receiptId, itemId, body
 function updateReceipt(req, res) {
   try {
-    const { id } = req.params;
+    const receiptId = req.params.id;
     const body = req.body;
-   
-    const updatedReceipt = updateReceiptById(id, body);
-    const updatedPoints = calculatePoints(updatedReceipt);
+
+    // const updatedReceipt = updateReceiptById(id, body);
+    // const updatedPoints = calculatePoints(updatedReceipt);
+    //Eventually we should just call updateItemById
+    //which will in turn call getItemById
+    getItemById(receiptId, body);
     return res.json({ id, updatedReceipt, updatedPoints });
   } catch (error) {
-    return res.status(404).json({ error: 'Receipt was not updated.' });
+    return res.status(404).json({ error: error.message });
   }
 }
 

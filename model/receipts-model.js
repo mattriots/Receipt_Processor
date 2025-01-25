@@ -8,8 +8,10 @@ class Receipt {
   }
 }
 
+//Add ID to item
 class Item {
-  constructor({ shortDescription, price }) {
+  constructor({ id, shortDescription, price }) {
+    this.id = id;
     this.shortDescription = shortDescription;
     this.price = price;
   }
