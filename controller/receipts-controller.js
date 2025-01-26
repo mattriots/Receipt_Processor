@@ -1,9 +1,9 @@
 const {
   storeReceipt,
   getReceiptById,
-  getItemById,
   calculatePoints,
   updateReceiptById,
+  updateItemById,
 } = require('../service/receipts-service');
 const { Receipt, Item } = require('../model/receipts-model');
 const { v4: uuidv4 } = require('uuid');
@@ -63,15 +63,23 @@ function updateReceipt(req, res) {
   try {
     const receiptId = req.params.id;
     const body = req.body;
+    const updatedReceipt = updateItemById(receiptId, body);
+    const updatedPoints = calculatePoints(updatedReceipt);
+    const itemsArr = Array.from(updatedReceipt.items.values());
 
-    // const updatedReceipt = updateReceiptById(id, body);
-    // const updatedPoints = calculatePoints(updatedReceipt);
-    //Eventually we should just call updateItemById
-    //which will in turn call getItemById
-    getItemById(receiptId, body);
-    return res.json({ id, updatedReceipt, updatedPoints });
+    return res.json({
+      receiptId: receiptId,
+      retailer: updatedReceipt.retailer,
+      purchaseDate: updatedReceipt.purchaseDate,
+      purchaseTime: updatedReceipt.purchaseTime,
+      items: itemsArr,
+      total: updatedReceipt.total,
+      updatedPoints,
+    });
   } catch (error) {
-    return res.status(404).json({ error: error.message });
+    return res
+      .status(404)
+      .json({ error: 'Recipt Not updated: ' + error.message });
   }
 }
 
