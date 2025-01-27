@@ -2,6 +2,7 @@ const {
   storeReceipt,
   getReceiptById,
   calculatePoints,
+  getReceiptKeys,
 } = require('../service/receipts-service');
 const { Receipt, Item } = require('../model/receipts-model');
 
@@ -48,7 +49,33 @@ function getReceiptPoints(req, res) {
   }
 }
 
+function getAllReceipts(req, res) {
+  try {
+    let returnArray = [];
+    const receiptKeyArray = getReceiptKeys();
+    for (const receiptKey of receiptKeyArray) {
+      const receiptBody = getReceiptById(receiptKey);
+      const receiptPoints = calculatePoints(receiptBody);
+      console.log(receiptPoints);
+      returnArray.push({
+        id: receiptKey,
+        retailer: receiptBody.retailer,
+        purchaseDate: receiptBody.purchaseDate,
+        receiptTime: receiptBody.purchaseTime,
+        items: receiptBody.items,
+        total: receiptBody.total,
+        points: receiptPoints,
+      });
+    }
+    console.log(returnArray);
+    return res.json(returnArray);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
+  }
+}
+
 module.exports = {
   processReceipt,
   getReceiptPoints,
+  getAllReceipts,
 };

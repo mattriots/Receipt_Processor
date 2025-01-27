@@ -10,6 +10,11 @@ function storeReceipt(receipt) {
   receiptsMap.set(id, receipt);
   return id;
 }
+
+function getReceiptKeys() {
+  return Array.from(receiptsMap.keys());
+}
+
 //Getter for Receipt by ID
 function getReceiptById(id) {
   if (!receiptsMap.has(id)) {
@@ -21,6 +26,8 @@ function getReceiptById(id) {
 //Function to calculate all points
 function calculatePoints(receipt) {
   let points = 0;
+
+  console.log('Calc points: ' + receipt);
 
   //Local variables for easy handling
   let retailer = receipt.retailer;
@@ -85,4 +92,5 @@ module.exports = {
   storeReceipt,
   getReceiptById,
   calculatePoints,
+  getReceiptKeys,
 };
