@@ -24,7 +24,7 @@ function updateItemById(receiptId, body) {
   const itemId = body.id;
   const receipt = getReceiptById(receiptId);
   const itemMap = receipt.items;
-  
+
   //Update or add new item
   itemMap.set(itemId, body);
   //Update receipt Total
@@ -127,6 +127,5 @@ module.exports = {
   storeReceipt,
   getReceiptById,
   calculatePoints,
-  updateReceiptById,
   updateItemById,
 };
